@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(if \\(-not $?\\) { \"cl.exe not found\" })"
+      "PowerShell(if \\(-not $?\\) { \"cl.exe not found\" })",
+      "PowerShell($cl = Get-ChildItem \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\18\\\\Community\\\\VC\\\\Tools\\\\MSVC\\\\\" -Recurse -Filter \"cl.exe\" -ErrorAction SilentlyContinue | Select-Object -First 1 FullName; $cl.FullName)"
     ]
   }
 }

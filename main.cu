@@ -103,34 +103,37 @@ int main(void) {
     printf("\n");
 
     /* ── 10. Bajar imagenes intermedias a CPU y guardar PNGs ──────────── */
+    float *h_rgb0    = (float*)malloc((size_t)3 * H * W * sizeof(float));
+    float *h_gris0   = (float*)malloc((size_t)    H * W * sizeof(float));
+    float *h_bordes0 = (float*)malloc((size_t)    H * W * sizeof(float));
+    float *h_norm0   = (float*)malloc((size_t)    H * W * sizeof(float));
+    char nombre[128];
 
-    /* Primera imagen original (RGB) */
-    float *h_rgb0 = (float*)malloc((size_t)3 * H * W * sizeof(float));
-    CUDA_CHECK(cudaMemcpy(h_rgb0, d_rgb,
-                          (size_t)3 * H * W * sizeof(float),
-                          cudaMemcpyDeviceToHost));
-    guardar_png_rgb("resultados/imagen_00_original.png", h_rgb0, H, W);
+    for (int b = 0; b < B; b++) {
+        CUDA_CHECK(cudaMemcpy(h_rgb0, d_rgb + (size_t)b * 3 * H * W,
+                              (size_t)3 * H * W * sizeof(float),
+                              cudaMemcpyDeviceToHost));
+        snprintf(nombre, sizeof(nombre), "resultados/imagen_%02d_original.png", b);
+        guardar_png_rgb(nombre, h_rgb0, H, W);
 
-    /* Primera imagen en grises */
-    float *h_gris0 = (float*)malloc((size_t)H * W * sizeof(float));
-    CUDA_CHECK(cudaMemcpy(h_gris0, d_gris,
-                          (size_t)H * W * sizeof(float),
-                          cudaMemcpyDeviceToHost));
-    guardar_png_gris("resultados/imagen_00_grises.png", h_gris0, H, W);
+        CUDA_CHECK(cudaMemcpy(h_gris0, d_gris + (size_t)b * H * W,
+                              (size_t)H * W * sizeof(float),
+                              cudaMemcpyDeviceToHost));
+        snprintf(nombre, sizeof(nombre), "resultados/imagen_%02d_grises.png", b);
+        guardar_png_gris(nombre, h_gris0, H, W);
 
-    /* Primera imagen bordes */
-    float *h_bordes0 = (float*)malloc((size_t)H * W * sizeof(float));
-    CUDA_CHECK(cudaMemcpy(h_bordes0, d_bordes,
-                          (size_t)H * W * sizeof(float),
-                          cudaMemcpyDeviceToHost));
-    guardar_png_gris("resultados/imagen_00_bordes.png", h_bordes0, H, W);
+        CUDA_CHECK(cudaMemcpy(h_bordes0, d_bordes + (size_t)b * H * W,
+                              (size_t)H * W * sizeof(float),
+                              cudaMemcpyDeviceToHost));
+        snprintf(nombre, sizeof(nombre), "resultados/imagen_%02d_bordes.png", b);
+        guardar_png_gris(nombre, h_bordes0, H, W);
 
-    /* Primera imagen normalizada */
-    float *h_norm0 = (float*)malloc((size_t)H * W * sizeof(float));
-    CUDA_CHECK(cudaMemcpy(h_norm0, d_norm,
-                          (size_t)H * W * sizeof(float),
-                          cudaMemcpyDeviceToHost));
-    guardar_png_gris("resultados/imagen_00_normalizada.png", h_norm0, H, W);
+        CUDA_CHECK(cudaMemcpy(h_norm0, d_norm + (size_t)b * H * W,
+                              (size_t)H * W * sizeof(float),
+                              cudaMemcpyDeviceToHost));
+        snprintf(nombre, sizeof(nombre), "resultados/imagen_%02d_normalizada.png", b);
+        guardar_png_gris(nombre, h_norm0, H, W);
+    }
 
     /* Archivo de texto con RMSE */
     FILE *fout = fopen("resultados/rmse_por_imagen.txt", "w");
