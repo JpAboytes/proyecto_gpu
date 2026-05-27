@@ -1,0 +1,39 @@
+{
+    "configurations": [
+        {
+            "name": "CUDA (Windows)",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include",
+                "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.5/include",
+                "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.4/include",
+                "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.0/include",
+                "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin/nvcc.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false
+            }
+        },
+        {
+            "name": "Sin CUDA (solo edicion)",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

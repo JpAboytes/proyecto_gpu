@@ -1,0 +1,10 @@
+# RMSE por imagen
+# Referencia: imagen 0 convertida a escala de grises
+#
+# Imagen         RMSE
+0            0.587404
+1            0.603116
+2            0.598270
+3            0.596376
+4            0.583873
+5            0.610736
