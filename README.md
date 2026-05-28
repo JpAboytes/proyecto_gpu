@@ -254,17 +254,19 @@ ms_grises = timer_stop(&t); // cudaEventSynchronize(stop) → elapsed ms
 
 ### Tabla de tiempos del pipeline
 
-| Operación | Tiempo (ms) |
-|---|---|
-| Transferencia H→D | |
-| K1 Grises | |
-| K2 Bordes (Sobel) | |
-| K3 Normalizar | |
-| K4 MSE | |
-| Transferencia D→H | |
-| **Total** | |
+Medición con imágenes de **1600 × 1200 px**, batch de **6 imágenes**, GPU con CUDA Events.
 
-> Completar con los tiempos impresos en consola al ejecutar `proyecto_gpu.exe`.
+| Operación | Tiempo (ms) | % del total |
+|---|---|---|
+| Transferencia H→D | 11.3938 | 51.8 % |
+| K1 Grises | 1.8363 | 8.3 % |
+| K2 Bordes (Sobel) | 0.9708 | 4.4 % |
+| K3 Normalizar | 3.5011 | 15.9 % |
+| K4 MSE | 3.7857 | 17.2 % |
+| Transferencia D→H | 0.2157 | 1.0 % |
+| **Total** | **21.7034** | 100 % |
+
+> La transferencia H→D domina con el 51.8 % del tiempo total, confirmando que el bus PCI-Express es el cuello de botella real, no el cómputo. Los cuatro kernels juntos suman solo 10.1 ms (46.2 %). La descarga D→H es negligible porque solo transfiere 6 floats (el vector RMSE).
 
 ### Imágenes de salida (imagen 0)
 
